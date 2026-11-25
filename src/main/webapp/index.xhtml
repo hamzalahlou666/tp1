@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>TP1</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputScript library="js" name="script.js"/>
+</h:head>
+<h:body>
+    <h1>TP1 Gemini</h1>
+    <h:form id="form">
+        <p:messages id="messages" showDetail="true" closable="true"/>
+
+        <div id="conteneur">
+            <div id="panelgauche" class="colonne">
+                <p:outputPanel id="questionetreponse" styleClass="colonne">
+                    <p:outputPanel rendered="#{bb.roleSystemeChangeable}" styleClass="ligne">
+                        <h:outputText value="Rôle système : "/>
+                        <p:selectOneMenu id="role" value="#{bb.roleKey}">
+                            <f:selectItems value="#{bb.roles.entrySet()}" var="e"
+                                           itemLabel="#{e.key}" itemValue="#{e.key}"/>
+                        </p:selectOneMenu>
+                    </p:outputPanel>
+
+                    <h:outputText value="Question :"/>
+                    <p:inputTextarea id="question" value="#{bb.question}" rows="4" autoResize="false"/>
+
+                    <div class="boutons">
+                        <p:commandButton value="Envoyer" action="#{bb.envoyer}"
+                                         update="form"/>
+                        <p:commandButton value="Nouveau chat" action="#{bb.nouveauChat}"
+                                         ajax="false" immediate="true" styleClass="ui-button-secondary"/>
+                    </div>
+
+                    <h:outputText value="Réponse :"/>
+                    <p:inputTextarea id="reponse" value="#{bb.reponse}" rows="6" readonly="true" autoResize="false"/>
+
+                    <p:outputPanel style="display:flex; align-items: center; gap: 10px">
+                        <h:outputText value="Mode debug : "/>
+                        <p:toggleSwitch id="debugSwitch" value="#{bb.debug}" styleClass="mb-2" label="Mode debug">
+                            <p:ajax update="debugPanel"/>
+                        </p:toggleSwitch>
+                                            </p:outputPanel>
+                </p:outputPanel>
+
+                <p:outputPanel id="debugPanel" styleClass="colonne">
+                    <p:outputPanel id="debug" rendered="#{bb.debug}" styleClass="colonne">
+                        <h:outputText value="JSON de la requête envoyée au LLM :"/>
+                        <p:inputTextarea id="texteRequeteJson" value="#{bb.texteRequeteJson}"
+                                         rows="10" readonly="true" autoResize="false"/>
+                        <h:outputText value="JSON de la réponse reçue du LLM :"/>
+                        <p:inputTextarea id="texteReponseJson" value="#{bb.texteReponseJson}"
+                                         rows="10" readonly="true" autoResize="false"/>
+                    </p:outputPanel>
+                </p:outputPanel>
+            </div>
+
+            <div id="paneldroit" class="colonne">
+                <h:outputText value="Conversation :"/>
+                <p:inputTextarea id="conversation" value="#{bb.conversation}" rows="30"
+                                 readonly="true" autoResize="false"/>
+                <div class="boutons">
+                    <p:commandButton type="button" value="Copier conversation"
+                                     onclick="copierConversation()"/>
+                </div>
+            </div>
+        </div>
+    </h:form>
+</h:body>
+</html>

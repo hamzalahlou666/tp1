@@ -1,0 +1,8 @@
+body { font-family: Arial, Helvetica, sans-serif; margin: 0; background: #f4f6f8; }
+h1 { text-align: center; margin: 15px 0; }
+#conteneur { display: flex; gap: 20px; padding: 0 20px 20px 20px; }
+.colonne { flex: 1; display: flex; flex-direction: column; gap: 10px; background: #fff;
+           padding: 15px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+.colonne textarea { width: 100%; box-sizing: border-box; }
+.boutons { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.ligne { display: flex; align-items: center; gap: 10px; }
